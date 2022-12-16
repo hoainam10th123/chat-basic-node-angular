@@ -1,0 +1,19 @@
+<div class="card friend-list border-primary">
+    <div class="card-header">
+        Online: {{usersOnline.length}}
+    </div>
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let item of friendList" (click)="selectUser(item)">
+                {{item}}
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div>
+    <app-chatbox 
+        (removeChatBox)="removeChatBox($event)"
+        *ngFor="let item of usersOnline" [right]="item.right" [username]="item.username">
+    </app-chatbox>
+</div>

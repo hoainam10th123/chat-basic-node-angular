@@ -1,0 +1,40 @@
+<div id="{{username}}" class="card chat-box border-primary">
+    <div class="card-header">
+        <div class="d-flex">
+            <div class="mr"><img src="./assets/user.png" alt="" class="rounded-circle img-person"></div>
+            <div>
+                <a href="/" class="text-primary" style="text-decoration: none;">{{username}}</a>
+                <div class="text-muted">1 minute ago</div>
+            </div>
+            <div class="child-right">
+                <a class="mr btn" (click)="minimumBoxChat()"><fa-icon [icon]="faMinus"></fa-icon></a>
+                <a class="mr" (click)="closeBoxChat()"><fa-icon [icon]="faClose"></fa-icon></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <ul #scrollMe [scrollTop]="scrollMe.scrollHeight" class="chat chat-frame" style="height: 350px;">
+            <li class="pd-5" *ngFor="let message of (messageService.messageThread$ | async)">                
+                <div class="d-flex" [ngClass]=" message.senderUsername === username ? 'd-flex' : 'parent-sent' ">
+                    <div class="mr" *ngIf="message.recipientUsername === currentUser.username">
+                        <img class="rounded-circle small-img" src="./assets/user.png" alt="">
+                    </div>
+                    <div class="message-body" [ngClass]="{'message-send': message.senderUsername === username}">                        
+                        <div>{{message.content}}</div>
+                    </div>                       
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="card-footer">
+        <form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off">
+            <div class="input-group">
+                <input type="text" name="messageContent" required [(ngModel)]="messageContent"
+                    class="form-control input-sm" placeholder="Send a private message">
+                <div class="input-group-append">
+                    <button [disabled]="!messageForm.valid" class="btn btn-primary" type="submit">Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
