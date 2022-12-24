@@ -77,6 +77,7 @@ io.on('connection', (socket) => {
 
   socket.on('OnConnectedRoom', ({username, groupName}) =>{
     socket.join(groupName)
+    // nen luu socket.id vao 1 Map rieng, do demo chạy nên làm như thế  này
     let obTemp = usersOnline.get(username)
     if (obTemp) {
       obTemp.push(socket.id)
